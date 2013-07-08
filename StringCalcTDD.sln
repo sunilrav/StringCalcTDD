@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringCalcTDD", "StringCalcTDD\StringCalcTDD.csproj", "{143CAC5D-2F67-4A10-B26D-63F28D737757}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringCalcTDD.Tests", "StringCalcTDD.Tests\StringCalcTDD.Tests.csproj", "{FA9BB415-4B54-4A3A-8D9A-E94F9D4782AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{143CAC5D-2F67-4A10-B26D-63F28D737757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{143CAC5D-2F67-4A10-B26D-63F28D737757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{143CAC5D-2F67-4A10-B26D-63F28D737757}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{143CAC5D-2F67-4A10-B26D-63F28D737757}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA9BB415-4B54-4A3A-8D9A-E94F9D4782AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA9BB415-4B54-4A3A-8D9A-E94F9D4782AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA9BB415-4B54-4A3A-8D9A-E94F9D4782AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA9BB415-4B54-4A3A-8D9A-E94F9D4782AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
