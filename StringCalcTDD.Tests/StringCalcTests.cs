@@ -73,6 +73,19 @@ namespace StringCalcTDD.Tests
 
         }
 
+        [TestMethod]
+        public void InputOfDelimiterChangerChangesTheDelimiterAndReturnsSum()
+        {
+            //Arrange
+            var stringCalculator = new StringCalculator();
+
+            //Act
+            var result = stringCalculator.Add("//;\n1,2\n3");
+
+            //Assert
+            Assert.AreEqual(6, result);
+        }
+
     }
 
     public class StringCalculator
@@ -82,9 +95,26 @@ namespace StringCalcTDD.Tests
             if(String.IsNullOrEmpty(numStr))
                 return 0;
 
-            var numberArray = numStr.Split(',', '\n');
+            if (numStr.Length == 1)
+                return int.Parse(numStr);
 
-            return numberArray.Length == 1 ? int.Parse(numberArray[0]) : numberArray.Sum(number => int.Parse(number));
+            char[] delimiters;
+            string stringWithoutAnyStartingDelimiter;
+            if (numStr.Substring(0, 2) == "//")
+            {
+                var newDelimiter = (char) numStr[2];
+                delimiters = new char[] {',', '\n', newDelimiter};
+                stringWithoutAnyStartingDelimiter = numStr.Substring(4);
+            }
+            else
+            {
+                delimiters = new char[] { ',', '\n' };
+                stringWithoutAnyStartingDelimiter = numStr;
+            }
+
+            var numberArray = stringWithoutAnyStartingDelimiter.Split(delimiters);
+
+            return numberArray.Sum(number => int.Parse(number));
         }
     }
 }
