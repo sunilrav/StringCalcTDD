@@ -30,7 +30,7 @@ namespace StringCalcTDD.Tests
             var result = stringCalculator.Add("1");
 
             //Assert
-            Assert.AreEqual(result, 1);
+            Assert.AreEqual(1, result);
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace StringCalcTDD.Tests
             var result = stringCalculator.Add("1,2");
 
             //Assert
-            Assert.AreEqual(result, 3);
+            Assert.AreEqual(3, result);
         }
 
         [TestMethod]
@@ -56,7 +56,21 @@ namespace StringCalcTDD.Tests
             var result = stringCalculator.Add("1,2,3");
 
             //Assert
-            Assert.AreEqual(result, 6);
+            Assert.AreEqual(6, result);
+        }
+
+        [TestMethod]
+        public void InputStringWithNewLineDelimiterReturnsSum()
+        {
+            //Arrange
+            var stringCalculator = new StringCalculator();
+
+            //Act
+            var result = stringCalculator.Add("1\n2,3");
+
+            //Assert
+            Assert.AreEqual(6, result);
+
         }
 
     }
@@ -68,7 +82,7 @@ namespace StringCalcTDD.Tests
             if(String.IsNullOrEmpty(numStr))
                 return 0;
 
-            var numberArray = numStr.Split(',');
+            var numberArray = numStr.Split(',', '\n');
 
             return numberArray.Length == 1 ? int.Parse(numberArray[0]) : numberArray.Sum(number => int.Parse(number));
         }
