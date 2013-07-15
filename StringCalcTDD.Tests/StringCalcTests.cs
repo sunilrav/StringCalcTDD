@@ -86,6 +86,26 @@ namespace StringCalcTDD.Tests
             Assert.AreEqual(6, result);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void InputOfNegativeNumberThrowsExeceptionWithTheNumbersInMessage()
+        {
+            //Arrange
+            var stringCalculator = new StringCalculator();
+
+            //Act
+            var result = 0;
+            try
+            {
+                result = stringCalculator.Add("-1,2,-3");
+            }
+            catch(Exception exception)
+            {
+                //Assert
+                Assert.AreEqual("negatives not allowed -1 -3", exception.Message);
+                throw;
+            }            
+        }
     }
 
     public class StringCalculator
@@ -113,6 +133,10 @@ namespace StringCalcTDD.Tests
             }
 
             var numberArray = stringWithoutAnyStartingDelimiter.Split(delimiters);
+
+            var negNumbersStr = numberArray.Where(s => int.Parse(s) < 0).Aggregate("", (current, s) => current + (s + " "));
+            if(!String.IsNullOrEmpty(negNumbersStr))
+                throw new Exception("negatives not allowed " + negNumbersStr.TrimEnd());
 
             return numberArray.Sum(number => int.Parse(number));
         }
