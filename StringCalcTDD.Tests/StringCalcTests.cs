@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -94,10 +95,9 @@ namespace StringCalcTDD.Tests
             var stringCalculator = new StringCalculator();
 
             //Act
-            var result = 0;
             try
             {
-                result = stringCalculator.Add("-1,2,-3");
+                stringCalculator.Add("-1,2,-3");
             }
             catch(Exception exception)
             {
@@ -105,6 +105,19 @@ namespace StringCalcTDD.Tests
                 Assert.AreEqual("negatives not allowed -1 -3", exception.Message);
                 throw;
             }            
+        }
+
+        [TestMethod]
+        public void InputOfNumbersGreaterThanThousandwillBeIgnoed()
+        {
+            //Arrange
+            var stringCalculator = new StringCalculator();
+
+            //Act
+            var result = stringCalculator.Add("1,2,1000");
+
+            //Assert
+            Assert.AreEqual(3, result);
         }
     }
 
@@ -122,21 +135,23 @@ namespace StringCalcTDD.Tests
             string stringWithoutAnyStartingDelimiter;
             if (numStr.Substring(0, 2) == "//")
             {
-                var newDelimiter = (char) numStr[2];
-                delimiters = new char[] {',', '\n', newDelimiter};
+                var newDelimiter = numStr[2];
+                delimiters = new[] {',', '\n', newDelimiter};
                 stringWithoutAnyStartingDelimiter = numStr.Substring(4);
             }
             else
             {
-                delimiters = new char[] { ',', '\n' };
+                delimiters = new[] { ',', '\n' };
                 stringWithoutAnyStartingDelimiter = numStr;
             }
 
-            var numberArray = stringWithoutAnyStartingDelimiter.Split(delimiters);
+            IEnumerable<string> numberArray = stringWithoutAnyStartingDelimiter.Split(delimiters);
 
             var negNumbersStr = numberArray.Where(s => int.Parse(s) < 0).Aggregate("", (current, s) => current + (s + " "));
             if(!String.IsNullOrEmpty(negNumbersStr))
                 throw new Exception("negatives not allowed " + negNumbersStr.TrimEnd());
+
+            numberArray = numberArray.Where(n => int.Parse(n) < 1000);
 
             return numberArray.Sum(number => int.Parse(number));
         }
