@@ -119,6 +119,19 @@ namespace StringCalcTDD.Tests
             //Assert
             Assert.AreEqual(3, result);
         }
+
+        [TestMethod]
+        public void InputOfDemlimiterWithMultipleCharatersReturnsSum()
+        {
+            //Arrange
+            var stringCalculator = new StringCalculator();
+
+            //Act
+            var result = stringCalculator.Add("//***\n1,2\n3***4");
+
+            //Assert
+            Assert.AreEqual(10, result);
+        }
     }
 
     public class StringCalculator
@@ -131,21 +144,22 @@ namespace StringCalcTDD.Tests
             if (numStr.Length == 1)
                 return int.Parse(numStr);
 
-            char[] delimiters;
+            string[] delimiters;
             string stringWithoutAnyStartingDelimiter;
             if (numStr.Substring(0, 2) == "//")
             {
-                var newDelimiter = numStr[2];
-                delimiters = new[] {',', '\n', newDelimiter};
-                stringWithoutAnyStartingDelimiter = numStr.Substring(4);
+                var indexOfNewLine = numStr.IndexOf("\n", StringComparison.InvariantCulture);
+                var newDelimiter = numStr.Substring(2,indexOfNewLine-2);
+                delimiters = new[] {",", "\n", newDelimiter};
+                stringWithoutAnyStartingDelimiter = numStr.Substring(indexOfNewLine+1);
             }
             else
             {
-                delimiters = new[] { ',', '\n' };
+                delimiters = new[] { ",", "\n" };
                 stringWithoutAnyStartingDelimiter = numStr;
             }
 
-            IEnumerable<string> numberArray = stringWithoutAnyStartingDelimiter.Split(delimiters);
+            IEnumerable<string> numberArray = stringWithoutAnyStartingDelimiter.Split(delimiters, StringSplitOptions.None);
 
             var negNumbersStr = numberArray.Where(s => int.Parse(s) < 0).Aggregate("", (current, s) => current + (s + " "));
             if(!String.IsNullOrEmpty(negNumbersStr))
