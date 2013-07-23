@@ -81,7 +81,7 @@ namespace StringCalcTDD.Tests
             var stringCalculator = new StringCalculator();
 
             //Act
-            var result = stringCalculator.Add("//;\n1,2\n3");
+            var result = stringCalculator.Add("//[;]\n1,2\n3");
 
             //Assert
             Assert.AreEqual(6, result);
@@ -127,7 +127,7 @@ namespace StringCalcTDD.Tests
             var stringCalculator = new StringCalculator();
 
             //Act
-            var result = stringCalculator.Add("//***\n1,2\n3***4");
+            var result = stringCalculator.Add("//[***]\n1,2\n3***4");
 
             //Assert
             Assert.AreEqual(10, result);
@@ -149,7 +149,11 @@ namespace StringCalcTDD.Tests
             if (numStr.Substring(0, 2) == "//")
             {
                 var indexOfNewLine = numStr.IndexOf("\n", StringComparison.InvariantCulture);
-                var newDelimiter = numStr.Substring(2,indexOfNewLine-2);
+                var delimiterStr = numStr.Substring(2,indexOfNewLine-2);
+                var newDelimiterMarkStart = delimiterStr.IndexOf("[", StringComparison.InvariantCulture);
+                var newDelimiterMarkEnd = delimiterStr.IndexOf("]", StringComparison.InvariantCulture);
+                var newDelimiter = delimiterStr.Substring(newDelimiterMarkStart+1,
+                                                          newDelimiterMarkEnd - newDelimiterMarkStart - 1);
                 delimiters = new[] {",", "\n", newDelimiter};
                 stringWithoutAnyStartingDelimiter = numStr.Substring(indexOfNewLine+1);
             }
